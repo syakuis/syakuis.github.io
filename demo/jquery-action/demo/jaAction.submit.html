@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<meta http-equiv="Expires" content="0"/> 
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<meta content="jQuery Action" name="Generator" />
+<meta content="Seok Kyun. Choi. (http://syaku.tistory.com)" name="Programmed" />
+<meta content="no" http-equiv="imagetoolbar" />
+<title>jQuery Action Demo</title>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="style.css" />
+
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action-ko.js"></script>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="../jquery.action.css" />
+</head>
+<body>
+<h1><a href="index.html">jQuery Action Demo Index 이동</a></h1>
+
+<div id="example">
+<h1>Example</h1>
+<div class="html">
+<script type="text/javascript">
+
+function onSubmit() {
+  jQuery('#form_input').jaAction({ 
+      values : 'mod=update' // mod 인풋박스의 값을 update 변경함.
+    , formAttr : 'action=./save.html' // form 속성의 action 을 ./save.html 변경함.
+    , send : 'submit' // form 을 submit 으로 전송함.
+    , filter : [
+        // #user_id 의 값이 없거나, user_id 형식의 값이 아니고 입력길이가 2자이상 10자이하가 아닌경우 아이디 .... 메세지 alert 창을 출력함.
+        { target : "#user_id", params : "&filter=notnull&filter=user_id&length=2,10&title=아이디" }
+        // #name 최소길이 3자를 넘을 경우 이름 .... 메세지 alert 창을 출력합니다.
+      , { target : "#name", params : "&filter=notnull&min_length=3&title=이름" }
+      , { target : "#pwd", params : "&filter=notnull&max_length=10&title=비밀번호" }
+        // #pwd2 가 #pwd 의 값과 다를 경우 비밀번호 확인 .... 메세지 alert 창을 출력합니다.
+      , { target : "#pwd2", params : "&filter=notnull&max_length=10&#pwd=!#pwd2&title=비밀번호 확인" }
+      , { target : "#email", params : "&filter=email&title=메일" }
+      // #age 의 값이 숫자가 아니거나, 50이상으로 입력한 경우 나이 ... 메세지 alert 창을 출력합니다.
+      , { target : "#age", params : "&filter=notnull&filter=number&number=50&title=나이" }
+      , { target : "#job", params : "&filter=notnull&title=직업" }
+      // input:radio[name=sex] 의 라디오박스 선택수가 0개인 경우 성별 ... 메세지 alert 창을 출력합니다.
+      , { target : "input:radio[name=sex]", params : "&selected=1&title=성별" }
+      // input:radio[name=s] 의 체크박스 선택수가 2개이상 3개이하가 아닌 경우 취미 ... 메세지 alert 창을 출력합니다.
+      , { target : "input:checkbox[name=s]", params : "&selected=2,3&title=취미" }
+
+    ]
+    , ask : 'update' // confirm 메세지 출력
+    , beforeAction : function() { // jaAction 메서드가 실행되기 전에 beforeAction 함수를 실행함. return false; 인 경우 jaAction 종료함.
+      var ja = $.jaFilter._filtering(jQuery('input:radio[name=is]'),'&selected=1&value=1');
+      if (ja.error) { alert("동의를 선택하세요."); return false;} 
+    }
+
+  });
+}
+
+</script>
+
+<form id="form_input" method="post" action="">
+hidden box : <input type="text" id="mod" name="mod" value="insert" />
+
+<table border="1">
+  <tr>
+    <td colspan="2"><input type="button" value="저장" onclick="onSubmit();" /></td>
+  </tr>
+  <tr>
+    <th>아이디</th>
+    <td><input type="text" id="user_id" name="user_id" /></td>
+  </tr>
+  <tr>
+    <th>이름</th>
+    <td><input type="text" id="name" name="name" /></td>
+  </tr>
+  <tr>
+    <th>비밀번호</th>
+    <td><input type="text" id="pwd" name="pwd" /></td>
+  </tr>
+  <tr>
+    <th>비밀번호 확인</th>
+    <td><input type="text" id="pwd2" name="pwd2" /></td>
+  </tr>
+  <tr>
+    <th>메일주소</th>
+    <td><input type="text" id="email" name="email" /></td>
+  </tr>
+  <tr>
+    <th>나이</th>
+    <td><input type="text" id="age" name="age" /></td>
+  </tr>
+  <tr>
+    <th>직업</th>
+    <td>
+      <select name="job" id="job">
+        <option value="">선택</option>
+        <option value="학생">학생</option>
+        <option value="회사원">회사원</option>
+        <option value="공무원">공무원</option>
+      </select>
+
+    </td>
+  </tr>
+  <tr>
+    <th>성별</th>
+    <td>
+      <input type="radio" id="sex_boy" name="sex" /> 남
+      <input type="radio" id="sex_girl" name="sex" /> 여
+    </td>
+  </tr>
+  <tr>
+    <th>취미</th>
+    <td>
+      <input type="button" value="모두선택" onclick="jQuery.ja.checked('#form_input input:checkbox[name=s]');" />
+      <input type="checkbox" id="s1" name="s" /> 여행
+      <input type="checkbox" id="s2" name="s" /> 공부
+      <input type="checkbox" id="s3" name="s" /> 컴퓨터
+      <input type="checkbox" id="s4" name="s" /> 연애
+      <input type="checkbox" id="s5" name="s" /> 독서
+      <input type="checkbox" id="s6" name="s" /> 게임
+    </td>
+  </tr>
+  <tr>
+    <th>동의</th>
+    <td>
+      <input type="radio" id="is1" name="is" value="1" /> 동의
+      <input type="radio" id="is_ss" name="is" value="2" /> 동의안함
+      <input type="radio" id="is3" name="is" value="3" /> 모르겠음
+    </td>
+  </tr>
+</table>
+</form>
+
+</div>
+
+<h1>Source</h1>
+<div class="code">
+
+<pre>
+
+function onSubmit() {
+  jQuery('#form_input').jaAction({ 
+      values : 'mod=update' // mod 인풋박스의 값을 update 변경함.
+    , formAttr : 'action=./save.html' // form 속성의 action 을 ./save.html 변경함.
+    , send : 'submit' // form 을 submit 으로 전송함.
+    , filter : [
+        // #user_id 의 값이 없거나, user_id 형식의 값이 아니고 입력길이가 2자이상 4자이하가 아닌경우 아이디 .... 메세지 alert 창을 출력함.
+        { target : "#user_id", params : "&filter=notnull&filter=user_id&length=2,4&title=아이디" }
+        // #name 최대길이 10자이상을 넘을 경우 성명 .... 메세지 alert 창을 출력합니다.
+      , { target : "#name", params : "&filter=notnull&max_length=10&title=성명" }
+      , { target : "#pwd", params : "&filter=notnull&max_length=40&title=비밀번호" }
+        // #pwd2 가 #pwd 의 값과 다를 경우 비밀번호 확인 .... 메세지 alert 창을 출력합니다.
+      , { target : "#pwd2", params : "&filter=notnull&max_length=40&#pwd=!#pwd2&title=비밀번호 확인" }
+      , { target : "#email", params : "&filter=email&title=메일" }
+      // #age 의 값이 숫자가 아니거나, 50이상으로 입력한 경우 나이 ... 메세지 alert 창을 출력합니다.
+      , { target : "#age", params : "&filter=notnull&filter=number&num=50&title=나이" }
+      , { target : "#job", params : "&filter=notnull&title=직업" }
+      // input:radio:[name=sex] 의 라디오박스 선택수가 0개인 경우 성별 ... 메세지 alert 창을 출력합니다.
+      , { target : "input:radio:[name=sex]", params : "&selected=1&title=성별" }
+      // input:radio:[name=s] 의 체크박스 선택수가 2개이상 3개이하가 아닌 경우 취미 ... 메세지 alert 창을 출력합니다.
+      , { target : "input:checkbox:[name=s]", params : "&selected=2,3&title=취미" }
+
+    ]
+    , ask : 'update' // confirm 메세지 출력
+    , beforeAction : function() { // jaAction 메서드가 실행되기 전에 beforeAction 함수를 실행함. return false; 인 경우 jaAction 종료함.
+      var ja = $.jaFilter._filtering(jQuery('input:radio:[name=is]'),'&selected=1&value=1');
+      if (ja.error) { alert("동의를 선택하세요."); return false;} 
+    }
+
+  });
+}
+
+
+</pre>
+
+</div>
+
+
+</body>
+</html>

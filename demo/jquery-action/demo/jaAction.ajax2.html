@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<meta http-equiv="Expires" content="0"/> 
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<meta content="jQuery Action" name="Generator" />
+<meta content="Seok Kyun. Choi. (http://syaku.tistory.com)" name="Programmed" />
+<meta content="no" http-equiv="imagetoolbar" />
+<title>jQuery Action Demo</title>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="style.css" />
+
+<script type="text/javascript" language="javascript" charset="UTF-8" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action-ko.js"></script>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="../jquery.action.css" />
+</head>
+<body>
+<h1><a href="index.html">jQuery Action Demo Index 이동</a></h1>
+
+<div id="example">
+<h1>Ajax 를 이용하여 서버의 결과 값 받아오기 : 중복체크 예제</h1>
+<div class="html">
+<script type="text/javascript">
+
+// 메세지 출력될때 호출되는 함수 ( data = ajax xml )
+function filter_message(data) {
+  data.target.next('p').remove();
+  var o = jQuery("<p class='i_dsc'></p>").text( data.message );
+  if (data.error) { o.css('color','red'); data.target.focus(); }
+  data.target.after(o.stop().css("opacity", 1).fadeIn(1).delay(2000).fadeOut(1000));
+}
+
+// 액션 메세지 출력 방식 변경 (액션 진행 될 때 alert 메세지 출려방식을 함수 호출로 변경함)
+jQuery.jaFilter.setDefaults({ message : filter_message });
+
+jQuery(function() {
+
+jQuery("#form #user_id").blur(function() {
+
+   if ($(this).val() == '') { return; }
+   jQuery('#form').jaAction({
+    filter : [
+      // 메세지를 출력할때 함수 호출 (filter_message)
+      { target : '#user_id' , params : "&filter=user_id&length=6,15&title=아이디" , message : filter_message }
+    ],
+    loading : false, // 로딩 표시하지 않음
+    beforeSend : function() {
+      var val = jQuery('#form #user_id').val();
+      var val2 = jQuery('#form #user_id2').val();
+
+      if ( (val == val2) && ( !$.ja.isEmpty(val) && !$.ja.isEmpty(val2) ) ) {
+        return false;
+      }
+    },
+
+    setAjax : {
+      success : function(xml) {
+        var error = $(xml).find('error').text();
+        var action = $(xml).find('action').text();
+        var source = $(xml).find('source').text();
+        var message = $(xml).find('message').text();
+        error = (error == 'true') ? true : false;
+
+        filter_message({ 
+          'error' : error,
+          'message' : message,
+          'target' : jQuery('#form #user_id')
+        });
+        
+        if (error) {
+          jQuery('#form #user_id2').val('');
+        } else {
+          jQuery('#form #user_id2').val( jQuery('#form #user_id').val() );
+        }
+
+      }
+    }
+    
+  });
+
+
+});
+});
+
+</script>
+
+<form id="form" method="post" action="./action2.xml">
+<input type="hidden" id="user_id2" name="user_id2" value="" />
+아이디 : <input type="text" title="아이디" class="i_text w100" id="user_id" name="user_id" value="" maxlength="15" />
+</form>
+
+</div>
+
+<h1>Source</h1>
+<div class="code">
+
+<pre>
+
+// 메세지 출력될때 호출되는 함수 ( data = ajax xml )
+function filter_message(data) {
+  data.target.next('p').remove();
+  var o = jQuery("<p class='i_dsc'></p>").text( data.message );
+  if (data.error) { o.css('color','red'); data.target.focus(); }
+  data.target.after(o.stop().css("opacity", 1).fadeIn(1).delay(2000).fadeOut(1000));
+}
+
+// 액션 메세지 출력 방식 변경
+jQuery.jaFilter.setDefaults({ message : filter_message });
+
+jQuery(function() {
+
+jQuery("#form #user_id").blur(function() {
+
+   if ($(this).val() == '') { return; }
+   jQuery('#form').jaAction({
+    filter : [
+      // 메세지를 출력할때 함수 호출 (filter_message)
+      { target : '#user_id' , params : "&filter=user_id&length=6,15&title=아이디" , message : filter_message }
+    ],
+    loading : false, // 로딩 표시하지 않음
+    beforeSend : function() {
+      var val = jQuery('#form #user_id').val();
+      var val2 = jQuery('#form #user_id2').val();
+
+      if ( (val == val2) && ( !$.ja.isEmpty(val) && !$.ja.isEmpty(val2) ) ) {
+        return false;
+      }
+    },
+
+    setAjax : {
+      success : function(xml) {
+        var error = $(xml).find('error').text();
+        var action = $(xml).find('action').text();
+        var source = $(xml).find('source').text();
+        var message = $(xml).find('message').text();
+        error = (error == 'true') ? true : false;
+
+        filter_message({ 
+          'error' : error,
+          'message' : message,
+          'target' : jQuery('#form #user_id')
+        });
+        
+        if (error) {
+          jQuery('#form #user_id2').val('');
+        } else {
+          jQuery('#form #user_id2').val( jQuery('#form #user_id').val() );
+        }
+
+      }
+    }
+    
+  });
+
+
+});
+});
+
+</pre>
+
+</div>
+
+
+</body>
+</html>

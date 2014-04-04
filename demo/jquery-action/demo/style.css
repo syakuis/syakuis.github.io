@@ -1,0 +1,40 @@
+
+ul, ol, li {
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+.html { padding:10px; border:3px dotted #EBCA52; min-height:100px;}
+.code { padding:10px; border:1px solid #EBCA52; min-height:100px;}
+.fl { float:left; }
+.fr { float:right; }
+.tc { text-align:center; }
+.tr { text-align:right; }
+.tl { text-align:left; }
+
+.clear { 
+  clear:both;
+  display:block;
+  float:none;
+  font-size:0 !important;
+  height:0;
+  line-height:0 !important;
+  margin:0 !important;
+  overflow:hidden;
+  padding:0 !important;
+  width:100%;
+}
+
+.hidden { display : none; }
+
+.mainTitle {
+  font-size:14pt;
+  color:#000;
+  font-weight:bold; 
+}
+
+.subTitle {
+  font-size:12pt;
+  color:#000;
+  font-weight:bold; 
+}

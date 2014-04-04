@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<meta http-equiv="Expires" content="0"/> 
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<meta content="jQuery Action" name="Generator" />
+<meta content="Seok Kyun. Choi. (http://syaku.tistory.com)" name="Programmed" />
+<meta content="no" http-equiv="imagetoolbar" />
+<title>jQuery Action Demo</title>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="style.css" />
+
+<script type="text/javascript" language="javascript" charset="UTF-8" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action-ko.js"></script>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="../jquery.action.css" />
+</head>
+<body>
+<h1><a href="index.html">jQuery Action Demo Index 이동</a></h1>
+
+<div id="example">
+<h1>Example</h1>
+<div class="html">
+<script type="text/javascript">
+
+function onSubmit() {
+  jQuery('#form').jaAction({ 
+    params : 'page=12', // ajax 전송에서만 사용가능하며, 전송할때 해당 파라메터도 함께 넘겨줌.
+    send : 'ajax', // form 을 ajax 으로 전송함. 기본 : ajax
+    ask_msg : '전송하시겠습니까?', // confirm 메세지 출력을 임의적으로 할 수 있음.
+    
+    beforeSend : function() { // 전송하기전에 호출됨.
+      alert('전송합니다.');
+    },
+    afterSend : function() { // ajax 전송에서만 사용이 가능하며, 결과값 error 가 false 인 경우에만 실행됨.
+      location.reload();
+    }
+
+  });
+}
+
+function onSubmit2() {
+  jQuery('#form').jaAction({ 
+    formAttr : 'action=action.xml&method=get',
+    values : '&test=' + escape('111@#!#!@#!@#ㅗ&&&&???&&&&1') + '&weqwe=3123213',
+    direct : 'page=1212&test=111@#!#!@#!@#ㅗ&&&&???&&&&1&weqwe=3123213', // ajax 전송에만 사용가능 하며, 모든 파라메터(input value)를 무시하고 본 값만 넘김.
+    loading_mode : 'center', // loading 레이어 중앙에서 노출
+    setAjax : { // ajax 전송에만 사용가능 하며, jQuery.ajaxSetup 과 동일한 효과. 커스텀 ajax 사용
+      dataType : 'xml',
+      success : function(xml) {
+        alert('ajax 끝');
+      }
+
+    }
+
+  });
+}
+
+</script>
+
+<form id="form" method="post">
+<input type="text" id="test" value="" />
+<input type="button" value="저장1" onclick="onSubmit();" />
+<input type="button" value="저장2" onclick="onSubmit2();" />
+</form>
+
+</div>
+
+<h1>Source</h1>
+<div class="code">
+
+<pre>
+
+# 결과 xml 구조는 action.xml 참조.
+# 정의된 xml 구조가 아닌경우 커스텀 ajax 를 사용해야함. (setAjax)
+
+function onSubmit() {
+  jQuery('#form').jaAction({ 
+    params : 'page=12', // ajax 전송에서만 사용가능하며, 전송할때 해당 파라메터도 함께 넘겨줌.
+    send : 'ajax', // form 을 ajax 으로 전송함. 기본 : ajax
+    ask_msg : '전송하시겠습니까?', // confirm 메세지 출력을 임의적으로 할 수 있음.
+    
+    beforeSend : function() { // 전송하기전에 호출됨.
+      alert('전송합니다.');
+    },
+    afterSend : function() { // ajax 전송에서만 사용이 가능하며, 결과값 error 가 false 인 경우에만 실행됨.
+      location.reload();
+    }
+
+  });
+}
+
+function onSubmit2() {
+  jQuery('#form').jaAction({ 
+    formAttr : 'action=?&method=get',
+    direct : 'page=1212&aaa=1111', // ajax 전송에만 사용가능 하며, 모든 파라메터(input value)를 무시하고 본 값만 넘김.
+    loading_mode : 'center', // loading 레이어 중앙에서 노출
+    setAjax : { // ajax 전송에만 사용가능 하며, jQuery.ajaxSetup 과 동일한 효과. 커스텀 ajax 사용
+      dataType : 'xml',
+      success : function(xml) {
+        alert('ajax 끝');
+      }
+
+    }
+
+  });
+}
+
+
+</pre>
+
+</div>
+
+
+</body>
+</html>

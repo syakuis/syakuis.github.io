@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<data>
+  <message>출력메세지</message> 
+  <error>true|false</error><!-- 오류여부 -->
+  <display>alert|right-span|element</display><!-- 메세지 출력방식 -->
+  <action>url|javascript</action><!-- 처리방식 -->
+  <source></source> <!-- action 사용될 소스 -->
+</data>

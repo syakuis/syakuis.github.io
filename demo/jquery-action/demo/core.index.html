@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<meta http-equiv="Expires" content="0"/> 
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<meta content="jQuery Action" name="Generator" />
+<meta content="Seok Kyun. Choi. (http://syaku.tistory.com)" name="Programmed" />
+<meta content="no" http-equiv="imagetoolbar" />
+<title>jQuery Action Demo</title>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="style.css" />
+
+<script type="text/javascript" language="javascript" charset="UTF-8" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="../jquery.action-ko.js"></script>
+<link rel="stylesheet" type="text/css" charset="UTF-8" href="../jquery.action.css" />
+</head>
+<body>
+<h1><a href="index.html">jQuery Action Demo Index 이동</a></h1>
+
+<div id="example">
+<h1>$.ja.replaceAll : 문자열 치환</h1>
+<div class="html">
+
+<div id="replaceAll"></div>
+<script type="text/javascript">
+$("#replaceAll").text( $.ja.replaceAll("aaaaaaaa","a","s") );
+</script>
+
+<pre>
+// 첫번째 상수의 값에 두번째 상수의 값이 존재할 경우 세번째 상수의 값으로 변경함.
+$("#replaceAll").text( $.ja.replaceAll("aaaaaaaa","a","s") );
+</pre>
+
+</div>
+
+<h1>$.ja.isEmpty : 빈값 체크</h1>
+<div class="html">
+
+<div id="isEmpty"></div>
+<script type="text/javascript">
+$("#isEmpty").append( "$.ja.isEmpty('aaaaaaaa') -->> " + $.ja.isEmpty('aaaaaaaa') +"<br />" )
+.append( "$.ja.isEmpty('') -->> " + $.ja.isEmpty('') +"<br />" )
+.append( "$.ja.isEmpty() -->> " + $.ja.isEmpty() +"<br />" );
+</script>
+
+</div>
+
+<h1>$.ja.defString : 빈값 치환</h1>
+<div class="html">
+<div id="defString"></div>
+<script type="text/javascript">
+$("#defString").append( "$.ja.defString('aa','bb') -->> " + $.ja.defString('aa','bb') +"<br />" )
+.append( "$.ja.defString('','bb') -->> " + $.ja.defString('','bb') +"<br />" )
+.append( "$.ja.defString(null,'bb') -->> " + $.ja.defString(null,'bb') +"<br />" );
+</script>
+</div>
+
+<h1>$.ja.getValue : 엘리먼트 값 읽기</h1>
+<div class="html">
+#aa : <input type="text" id="aa" value="1" /><br />
+#aa2 : <select id="aa2"><option value="">선택</option><option value="1">1</option><option value="3" selected="selected">3</option></select><br />
+input:checkbox:[name=aa3] : <input type="checkbox" name="aa3" value="1" />1<input type="checkbox" name="aa3" value="2" checked="checked" />2<input type="checkbox" name="aa3" value="3" checked="checked" />3<br />
+input:radio:[name=aa4] : <input type="radio" name="aa4" value="1" checked="checked" />1<input type="radio" name="aa4" value="2" />2<input type="radio" name="aa4" value="3" />3
+
+<div id="getValue"></div>
+<script type="text/javascript">
+$("#getValue").append( "$.ja.getValue('#aa') -->> " + $.ja.getValue('#aa') +"<br />" );
+$("#getValue").append( "$.ja.getValue('#aa2') -->> " + $.ja.getValue('#aa2') +"<br />" );
+$("#getValue").append( "$.ja.getValue('input:checkbox:[name=aa3]') -->> " + $.ja.getValue('input:checkbox:[name=aa3]') +" // return array <br />" );
+$("#getValue").append( "$.ja.getValue('input:radio:[name=aa4]') -->> " + $.ja.getValue('input:radio:[name=aa4]') +"<br />" );
+</script>
+</div>
+
+<h1>$.ja.setValue : 엘리먼트 값 넣기</h1>
+<div class="html">
+#a : <input type="text" id="a" value="1" /><br />
+#a2 : <select id="a2"><option value="">선택</option><option value="1">1</option><option value="3">3</option></select><br />
+input:checkbox:[name=a3] : <input type="checkbox" name="a3" value="1" />1<input type="checkbox" name="a3" value="2" />2<input type="checkbox" name="a3" value="3" />3<br />
+input:radio:[name=a4] : <input type="radio" name="a4" value="1" />1<input type="radio" name="a4" value="2" />2<input type="radio" name="a4" value="3" />3
+<br /><br />
+<div id="setValue"></div>
+<script type="text/javascript">
+jQuery(function() {
+$.ja.setValue('#a','2');
+$.ja.setValue('#a2','1');
+$.ja.setValue('input:checkbox:[name=a3]',[2,1]);
+$.ja.setValue('input:radio:[name=a4]','1');
+
+$("#setValue").append( "$.ja.setValue('#a','2');<br />" )
+.append( "$.ja.setValue('#a2','1');<br />" )
+.append( "$.ja.setValue('input:checkbox:[name=a3]',[2,1]);<br />" )
+.append( "$.ja.setValue('input:radio:[name=a4]','1');<br />" );
+});
+</script>
+</div>
+
+<h1>$.ja.setValues : 여러 엘리먼트 값 넣기</h1>
+<div class="html">
+<form id="setValuesForm">
+  입력1 <input type="text" id="j1" /><br />
+  입력2 <input type="text" id="j2" />
+</form>
+<div id="setValues"></div>
+<script type="text/javascript">
+$.ja.setValues('#setValuesForm',[{ name : '#j1' , value : '1' },{ name : '#j2' , value : '444' }]);
+
+$("#setValues").append( "$.ja.setValues('#setValuesForm',[{ name : '#j1' , value : '1' },{ name : '#j2' , value : '444' }]);<br />" );
+</script>
+</div>
+
+<h1>$.ja.isRegnum : 대한민국 주민등록번호 체크</h1>
+<div class="html">
+<div id="isRegnum"></div>
+<script type="text/javascript">
+$("#isRegnum").append("$.ja.isRegnum('810101-1212112') -->> " + $.ja.isRegnum('810101-1212112') +"<br />" );
+</script>
+</div>
+
+<h1>$.ja.isSelected : 엘리먼트 선택수 체크</h1>
+<div class="html">
+
+input:checkbox:[name=fff1] : <input type="checkbox" name="fff1" value="1" checked="checked" />1<input type="checkbox" name="fff1" value="2" />2<input type="checkbox" name="fff1" value="3" checked="checked" />3<br />
+
+<div id="isSelected"></div>
+<script type="text/javascript">
+$("#isSelected")
+.append("$.ja.isSelected('input:checkbox:[name=fff1]','max',2) -->> " + $.ja.isSelected('input:checkbox:[name=fff1]','max','2') +" // 최대 2개이하가 선택일 경우 성립<br />" )
+.append("$.ja.isSelected('input:checkbox:[name=fff1]','max',1) -->> " + $.ja.isSelected('input:checkbox:[name=fff1]','max','1') +" // 최대 1개이하가 선택일 경우 성립<br />" )
+.append("$.ja.isSelected('input:checkbox:[name=fff1]','min',1) -->> " + $.ja.isSelected('input:checkbox:[name=fff1]','min','1') +" // 최소 1개이상이 선택일 경우 성립<br />" )
+.append("$.ja.isSelected('input:checkbox:[name=fff1]','min',3) -->> " + $.ja.isSelected('input:checkbox:[name=fff1]','min','3') +" // 최소 3개이상이 선택일 경우 성립<br />" )
+.append("$.ja.isSelected('input:checkbox:[name=fff1]','min','*') -->> " + $.ja.isSelected('input:checkbox:[name=fff1]','min','*') +" // 모두 선택일 경우 성립<br />" );
+</script>
+</div>
+
+<h1>$.ja.isCount : 문자열 길이 체크</h1>
+<div class="html">
+<div id="isCount"></div>
+<script type="text/javascript">
+$("#isCount")
+.append("$.ja.isCount('min','3','1234abcdㄱㄴㄷㄹ가나다라') -->> " + $.ja.isCount('min','3','1234abcdㄱㄴㄷㄹ가나다라') +" // 최소 길이가 3이상인 경우 성립<br />" )
+.append("$.ja.isCount('max','16','1234abcdㄱㄴㄷㄹ가나다라') -->> " + $.ja.isCount('max','16','1234abcdㄱㄴㄷㄹ가나다라') +" // 최대 길이가 16이하인 경우 성립<br />" );
+</script>
+</div>
+
+<h1>$.ja.setCookie : 쿠키생성</h1>
+<div class="html">
+<div id="setCookie"></div>
+<script type="text/javascript">
+$.ja.setCookie('_cookie_','값이있음',30,'/');
+$("#setCookie").append("$.ja.setCookie('_cookie_','값이있음',30,'/');<br />" );
+</script>
+</div>
+
+<h1>$.ja.getCookie : 쿠키출력</h1>
+<div class="html">
+<div id="getCookie"></div>
+<script type="text/javascript">
+$("#getCookie").append("$.ja.getCookie('_cookie_') -->> " + $.ja.getCookie('_cookie_') +"<br />" );
+</script>
+</div>
+
+<h1>$.ja.dateFormat : 날짜 포맷 출력</h1>
+<div class="html">
+<div id="dateFormat"></div>
+<script type="text/javascript">
+$("#dateFormat").append( "$.ja.dateFormat('yyyy.mm.dd') -->> " + $.ja.dateFormat('yyyy.mm.dd') +"<br />" )
+.append( "$.ja.dateFormat('yyyy.mm.dd',new Date(2011,1,12)) -->> " + $.ja.dateFormat('yyyy.mm.dd',new Date(2011,1,12)) +"<br />" );
+</script>
+</div>
+
+<h1>$.ja.hyphen : 대한민국 연락처 자동 하이픈 넣기</h1>
+<div class="html">
+우편번호 <input type="text" class="n_hyphen" id="s_zipcode" maxlength="6" />
+연락처 <input type="text" class="n_hyphen" id="s_con" />
+날짜 <input type="text" class="n_hyphen" id="s_date" maxlength="8" />
+주민번호 <input type="text" class="n_hyphen" id="s_jumin" maxlength="13" />
+
+<br/> * jQuery blur 이벤트를 사용함.
+<div id="hyphen"></div>
+<script type="text/javascript">
+jQuery(function() {
+
+jQuery(".n_hyphen").blur(function() {
+
+  $.ja.hyphen('#s_zipcode','zipcode');
+  $.ja.hyphen('#s_con','contact');
+  $.ja.hyphen('#s_date','calendar');
+  $.ja.hyphen('#s_jumin','jumin');
+});
+
+});
+
+$("#hyphen").append( "$.ja.hyphen('#s_zipcode','zipcode'); // 우편번호 하이픈<br />" )
+.append( "$.ja.hyphen('#s_con','contact'); // 연락처 하이픈 <br />" )
+.append( "$.ja.hyphen('#s_date','calendar','.'); // 날짜 하이픈 <br />" )
+.append( "$.ja.hyphen('#s_jumin','jumin'); // 주민번호 하이픈 <br />" );
+</script>
+</div>
+
+<h1>$.ja.checked : 모두 체크박스 체크하기</h1>
+<div class="html">
+
+<input type="button" value="모두선택" onclick="jQuery.ja.checked('input:checkbox:[name=saa]');" />
+<input type="button" value="모두선택" onclick="jQuery.ja.checked('input:checkbox:[name=saa]',true);" />
+<input type="checkbox" id="saa1" name="saa" /> 여행
+<input type="checkbox" id="saa2" name="saa" /> 공부
+<input type="checkbox" id="saa3" name="saa" /> 컴퓨터
+<input type="checkbox" id="saa4" name="saa" /> 연애
+<input type="checkbox" id="saa5" name="saa" /> 독서
+<input type="checkbox" id="saa6" name="saa" /> 게임
+
+<div id="checked"></div>
+<script type="text/javascript">
+$("#checked").append( "jQuery.ja.checked('input:checkbox:[name=saa]'); // 이미 선택된 체크 반전여부 물어봄 <br />")
+.append( "jQuery.ja.checked('input:checkbox:[name=saa]',true); // 반전여부 안물어봄 ");
+</script>
+</div>
+
+
+<h1>$.ja.nudeHtml : HTML 소스 지우기</h1>
+<div class="html">
+<textarea id="nudes1" style="height:100%;width:100%;">
+<div>div태그</div>
+<li>li태그</li>
+<a href="sadas">a링크</a>
+<b>찐하게</b>
+</textarea>
+<div id="nudeHtml"></div>
+<script type="text/javascript">
+$("#nudeHtml").append( "$.ja.nudeHtml($('#nudes1').val()) -->> " + $.ja.nudeHtml($('#nudes1').val()) +"<br />" );
+</script>
+</div>
+
+<h1>$.ja.leftPad : 왼쪽으로 문자채우기</h1>
+<div class="html">
+<div id="leftPad"></div>
+<script type="text/javascript">
+$("#leftPad").append( "$.ja.leftPad('가다나다라마',20,'A') -->> " + $.ja.leftPad('가다나다라마',20,'A') +"<br />" );
+</script>
+</div>
+
+
+<h1>$.ja.offset : 레이아웃 정보 출력</h1>
+<div class="html">
+<div id="offset"></div>
+<script type="text/javascript">
+var layer = $.ja.offset(100,100,'layer');
+var popup = $.ja.offset(100,100,'popup');
+$("#offset").append( "$.ja.offset(100,100,'layer') -->> {width:" + layer.width + ", height:" + layer.height + ", scrollTop:" + layer.scrollTop + ", scrollLeft:" + layer.scrollLeft + ", scrollWidth:" + layer.scrollWidth + " , scrollHeight:" + layer.scrollHeight + ", top:" + layer.top + ", left:" + layer.left + "} <br />// 넓이 100 높이 100의 레이어 창의 기준으로 width 창 넓기 , height 창 높이 , scrollTop : 스크롤 top 위치, scrollLeft 스크롤 left 위치 , scrollWidth 스크롤포함 전체 넓이 , scrollHeight 스크릴포함 전체 높이 , top 해당 레이어의 기준으로 중앙위치의 top위치 , left 해당 레이어의 기준으로 중앙위치의 left위치<br />" );
+$("#offset").append( "$.ja.offset(100,100,'popup') -->> {width:" + popup.width + ", height:" + popup.height + ", scrollTop:" + popup.scrollTop + ", scrollLeft:" + popup.scrollLeft + ", scrollWidth:" + popup.scrollWidth + " , scrollHeight:" + popup.scrollHeight + ", top:" + popup.top + ", left:" + popup.left + "} // 넓이 100 높이 100의 팝업 창의 기준<br />" );
+</script>
+</div>
+
+
+<h1>$.ja.popup : 팝업창 띄우기</h1>
+<div class="html">
+<input type="button" value="팝업창" onclick="jQuery.ja.popup({ url : 'http://naver.com' , name : 'naver' , width : 200 , height : 200});" />
+<input type="button" value="중앙 팝업창" onclick="jQuery.ja.popup({ url : 'http://naver.com' , name : 'naver' , width : 200 , height : 200 , center : true});" />
+
+<div id="popup">
+<pre>
+    url : null
+  , name : null
+  , width : 100
+  , height : 100
+  , scrollbars : 'no'
+  , resizable : 'no'
+  , toolbar : 'no'
+  , directories : 'no'
+  , top : 0
+  , left : 0
+  , status : 'no'
+  , menubar : 'no'
+  , center : false // 팝업창 호출을 중간에 할 경우
+</pre>
+</div>
+<script type="text/javascript">
+$("#popup").append( "$.ja.popup({ url : 'http://naver.com' , name : 'naver' , width : 200 , height : 200});<br />" )
+.append( "$.ja.popup({ url : 'http://naver.com' , name : 'naver' , width : 200 , height : 200 , center : true});<br />" );
+</script>
+</div>
+
+<h1>$.ja.layer : 레이어 모달 띄우기</h1>
+<div class="html">
+<input type="button" value="레이어창" onclick="jQuery.ja.layer({ source : 'http://naver.com' , name : 'naver' , width : 200 , height : 200 , bgshow : false});" />
+<input type="button" value="레이어창 닫기" onclick="jQuery('#ja').remove();" />
+<input type="button" value="특정소스를 레이어창 배경넣고 중앙위치" onclick="jQuery.ja.layer({ type : 'html' , source : '<div style=background:#fff>ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ나ㅓ미어ㅣㅁ너</div>' , name : 'source' , width : 200 , height : 200 , bgshow : true , center : true });" />
+
+<div id="layer">
+<pre>
+    target : 'ja' // 레이어 id 명
+  , width : 100
+  , height : 100
+  , top : 0
+  , left : 0
+  , type : 'iframe' // iframe | html
+  , source : '' // url 혹은 레이어에 노출될 소스
+  , open : true // 활성화 여부
+  , center : false  // 레이어 위치를 중간에 할 경우
+  , bgshow : true // 배경 활성화 여부
+  , bgcolor : '#aaaaaa' // 배경색
+  , reload : false // 첫 호출되는 프레임url 새로고침 여부
+</pre>
+</div>
+<script type="text/javascript">
+$("#layer").append( "jQuery.ja.layer({ source : 'http://naver.com' , name : 'naver' , width : 200 , height : 200 , bgshow : false}); // 레이어창<br />" )
+.append( "jQuery('#ja').remove(); // 레이어창 닫기<br />" )
+.append( "jQuery.ja.layer({ type : 'html' , source : '&lt;div style=background:#fff>ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ나ㅓ미어ㅣㅁ너&lt;/div>' , name : 'source' , width : 200 , height : 200 , bgshow : true , center : true }); // 특정소스를 레이어창 배경넣고 중앙위치<br />" );
+</script>
+</div>
+
+
+
+</div>
+
+
+
+</body>
+</html>

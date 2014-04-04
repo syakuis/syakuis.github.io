@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/> 
+<meta http-equiv="Expires" content="0"/> 
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<meta content="jQuery PageNavigator" name="Generator" />
+<meta content="Seok Kyun. Choi. (http://syaku.tistory.com)" name="Programmed" />
+<meta content="no" http-equiv="imagetoolbar" />
+<title>jQuery PageNavigator Demo</title>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" language="javascript" charset="UTF-8" src="./jquery.pagenavigator.js"></script>
+
+<style>
+/* CSS By NHN Nuli */
+
+.paginate_complex{padding:15px 0;line-height:normal;text-align:center}
+.paginate_complex a,
+.paginate_complex strong{display:inline-block;position:relative;z-index:2;margin:0 -3px;padding:1px 8px;border-left:1px solid #d6d6d6;border-right:1px solid #d6d6d6;background-color:#fff;font:bold 12px/16px Tahoma, Sans-serif;color:#323232;text-decoration:none;vertical-align:top}
+.paginate_complex a:hover,
+.paginate_complex a:active,
+.paginate_complex a:focus{background-color:#f8f8f8}
+.paginate_complex strong{color:#ff8600}
+.paginate_complex .direction{border:0;font-weight:normal;color:#767676;text-decoration:none !important;z-index:1}
+.paginate_complex .direction:hover,
+.paginate_complex .direction:active,
+.paginate_complex .direction:focus{color:#323232;background-color:#fff}
+.paginate_complex .sprev{border-left:0}
+.paginate_complex .snext{border-right:0}
+.paginate_complex .direction span{display:inline-block;position:relative;top:4px;width:0;height:0;font-size:0;line-height:0;vertical-align:top}
+.paginate_complex .sprev span{*left:-4px;margin-right:1px;border:3px solid;border-top:solid #fff;border-bottom:solid #fff;border-left:0}
+.paginate_complex .snext span{margin-left:1px;border:3px solid;border-top:solid #fff;border-bottom:solid #fff;border-right:0}
+</style>
+
+</head>
+<body>
+<div id="example">
+<h1>jQuery PageNavigator 기본 예제</h1>
+<div class="html">
+
+<script type="text/javascript">
+jQuery(function() {
+  jQuery('#text_view').text(document.URL);
+
+  jQuery('#document_navi').jaPageNavigator({
+      page_row : "10" // 보여질 게시물 목록 수
+    , page_link : "10" // 보여질 페이지 링크 수
+    , total_count : "500" // 게시물 총 수
+  });
+
+  jQuery('#document_navi2').jaPageNavigator({
+      page_row : "10" // 보여질 게시물 목록 수
+    , page_link : "10" // 보여질 페이지 링크 수
+    , total_count : "500" // 게시물 총 수
+    , tag : '#document_navi2' // 특정 영역으로 이동 (책갈피)
+  });
+
+});
+
+</script>
+
+<h1>현재 URL : <span id='text_view'></span></h1>
+<hr/>
+
+<h1>기본 페이지 네비게이션 스타일</h1>
+<div id="document_navi">
+  <a class="start" href="#">&nbsp;처음</a>
+  <a class="prev" href="#">&nbsp;이전&nbsp;({page_link})</a>
+  <a class="prevpage" href="#">이전&nbsp;</a>
+  
+  <!-- 페이지 번호 링크가 노출되는 영역 -->
+  <span class="pageaction"></span>
+  <!-- 페이지 번호 링크 태그 -->
+  <a class="num" href="">{page}</a>
+  <!-- 현재 페이지 번호 태그 -->
+  <strong class="now">{page}</strong>
+  <!-- 페이지 링크 구분 태그 -->
+  <span class="div">&nbsp;</span>
+
+  <a class="nextpage" href="#">다음&nbsp;</a>
+  <a class="next" href="#">다음&nbsp;({page_link})&nbsp;</a>
+  <a class="end" href="#">끝&nbsp;</a>
+</div>
+
+<hr />
+
+<h1>NHN Nuli 페이지 네비게이션 스타일</h1>
+<div class="paginate_complex" id="document_navi2">
+  <a class="direction sprev start" href="#"><span></span><span></span>&nbsp;처음</a>
+  <a class="direction sprev startx">&nbsp;처음</a><!-- 링크가 없을 때 표시할 태그 -->
+
+  <a class="direction sprev prev" href="#"><span></span>&nbsp;이전&nbsp;({page_link})</a>
+  <a class="direction sprev prevx">&nbsp;이전</a><!-- 링크가 없을 때 표시할 태그 -->
+
+  <a class="direction sprev prevpage" href="#"><span></span>이전&nbsp;(-1)</a>
+  <a class="direction sprev prevpagex">이전&nbsp;(-1)</a><!-- 링크가 없을 때 표시할 태그 -->
+
+  <span class="pageaction"></span>
+  <a class="num" href="">{page}</a>
+  <strong class="now">{page}</strong>
+  <span class="div">&nbsp;</span>
+
+  <a class="direction snext nextpage" href="#">다음&nbsp;(+1)<span></span></a>
+  <a class="direction snext nextpagex">다음&nbsp;(+1)</a><!-- 링크가 없을 때 표시할 태그 -->
+
+  <a class="direction snext next" href="#">다음&nbsp;({page_link})&nbsp;<span></span></a>
+  <a class="direction snext nextx">다음&nbsp;</a><!-- 링크가 없을 때 표시할 태그 -->
+
+  <a class="direction snext end" href="#">끝&nbsp;<span></span><span></span></a>
+  <a class="direction snext endx">끝&nbsp;</a><!-- 링크가 없을 때 표시할 태그 -->
+
+</div>
+<hr />
+</div>
+
+<h1>Source</h1>
+<div class="code">
+
+<pre>
+  jQuery('#document_navi').jaPageNavigator({
+      page_row : "10" // 보여질 게시물 목록 수
+    , page_link : "10" // 보여질 페이지 링크 수
+    , total_count : "500" // 게시물 총 수
+  });
+
+  jQuery('#document_navi2').jaPageNavigator({
+      page_row : "10" // 보여질 게시물 목록 수
+    , page_link : "10" // 보여질 페이지 링크 수
+    , total_count : "500" // 게시물 총 수
+    , tag : '#document_navi2' // 특정 영역으로 이동 (책갈피)
+  });
+</pre>
+
+</div>
+
+
+</body>
+</html>
