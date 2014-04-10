@@ -13,6 +13,16 @@
 <script type="text/javascript" language="javascript" charset="UTF-8" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" language="javascript" charset="UTF-8" src="./jquery.pagenavigator.js"></script>
 
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
 <style>
 /* CSS By NHN Nuli */
 
@@ -55,6 +65,12 @@ jQuery(function() {
     , page_link : "10" // 보여질 페이지 링크 수
     , total_count : "500" // 게시물 총 수
     , tag : '#document_navi2' // 특정 영역으로 이동 (책갈피)
+  });
+
+  jQuery('#document_navi3').jaPageNavigator({
+      page_row : "10" // 보여질 게시물 목록 수
+    , page_link : "10" // 보여질 페이지 링크 수
+    , total_count : "500" // 게시물 총 수
   });
 
 });
@@ -113,23 +129,45 @@ jQuery(function() {
 
 </div>
 <hr />
+
+<h1>Bootstrap 페이지 네비게이션 스타일</h1>
+<ul class="pagination pagination-sm" id="document_navi3">
+  <li class="prev"><a href="#">&laquo;</a></li>
+  <li class="disabled prevx"><a href="#">&laquo;</a></li>
+  <span class="pageaction"></span>
+  <li class="num"><a href="#">{page}</a></li>
+  <li class="active now"><a href="#">{page} <span class="sr-only">(current)</span></a></li>
+  <li class="next"><a href="#">&raquo;</a></li>
+  <li class="disabled nextx"><a href="#">&raquo;</a></li>
+</ul>
+</div>
+<hr />
 </div>
 
 <h1>Source</h1>
 <div class="code">
 
 <pre>
+  // 기본 스타일
   jQuery('#document_navi').jaPageNavigator({
       page_row : "10" // 보여질 게시물 목록 수
     , page_link : "10" // 보여질 페이지 링크 수
     , total_count : "500" // 게시물 총 수
   });
 
+  // NHN Nuli 스타일
   jQuery('#document_navi2').jaPageNavigator({
       page_row : "10" // 보여질 게시물 목록 수
     , page_link : "10" // 보여질 페이지 링크 수
     , total_count : "500" // 게시물 총 수
     , tag : '#document_navi2' // 특정 영역으로 이동 (책갈피)
+  });
+
+  // Bootstrap 스타일
+  jQuery('#document_navi3').jaPageNavigator({
+      page_row : "10" // 보여질 게시물 목록 수
+    , page_link : "10" // 보여질 페이지 링크 수
+    , total_count : "500" // 게시물 총 수
   });
 </pre>
 

@@ -82,7 +82,7 @@
       var regx_page = new RegExp("" + p.name + "\=([0-9]+)");
       regx_page.exec(loc);
       page = parseInt(RegExp.$1);
-      if (page == '') page = 1;
+      if (page == '' || isNaN(page) ) page = 1;
     }
 
     var total_count = parseInt(p.total_count);
