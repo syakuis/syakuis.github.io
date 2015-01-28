@@ -114,7 +114,7 @@ public class {{table | frist_uppercase}} {
 	&lt;insert id="insert" useGeneratedKeys="true" keyProperty="{{name}}"&gt;
 	
 		&lt;selectKey keyProperty="{{name}}" resultType="{{type}}" order="BEFORE"&gt;
-		SELECT {{table | uppercase}}_{{table | uppercase}}_SEQ.NEXTVAL FROM DUAL
+		SELECT {{table | uppercase}}_{{name | uppercase}}_SEQ.NEXTVAL FROM DUAL
 		&lt;/selectKey&gt;
 		
 		INSERT INTO {{table}} (
@@ -128,7 +128,7 @@ public class {{table | frist_uppercase}} {
 
 	&lt;update id="update"&gt;
 		UPDATE {{table}} SET
-		<span ng-repeat="field in fields">{{field.name}} =  #{<span ng-bind="field.name"></span>}<span ng-if="$last == false">,&#10;&#09;&#09;</span></span>
+		<span ng-repeat="field in fields">{{field.name}} = #{<span ng-bind="field.name"></span>}<span ng-if="$last == false">,&#10;&#09;&#09;</span></span>
 		WHERE {{name}} = #{<span ng-bind="name"></span>}
 	&lt;/update&gt;
 	
@@ -145,7 +145,6 @@ public class {{table | frist_uppercase}} {
 <p class="bg-primary">Mybatis Mapper Interface</p>
 <div>
 <pre>
-
 @Repository
 public interface {{table | frist_uppercase}}Mapper {
 
@@ -156,7 +155,6 @@ public interface {{table | frist_uppercase}}Mapper {
 	void update({{table | frist_uppercase}} {{name}});
 	void delete({{type}} {{name}});
 }
-
 </pre>
 </div>
 <!-- Mybatis Mapper Interface -->
