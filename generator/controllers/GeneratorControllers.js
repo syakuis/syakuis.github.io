@@ -7,23 +7,31 @@ generatorControllers.controller('Generator', ['$scope',
 
 		$scope.field_name = null;
 
+		$scope.fnCopy = function(target) {
+			return jQuery(target).html();
+		}
+
 		$scope.fnCreate = function() {
 			if ($scope.field_name != null) {
 
-				var div = $scope.field_name.split(',');
+				var field_name = $scope.field_name.replace(/\s/g,'');
+				
+				$scope.fields = [];
+
+				var div = field_name.split(',');
 				var count = div.length;
 
 				if (count > 1) {
 					for(var i = 0; i < count; i++) {
 						
 						if (i == 0) {
-							$scope.fnAddId(div[0]);
+							$scope.fnAddId(div[i]);
 						} else {
-							$scope.fnAdd(div[0]);							
+							$scope.fnAdd(div[i]);							
 						}
 					}
 				} else {
-					$scope.fnAddId($scope.field_name);
+					$scope.fnAddId(field_name);
 				}
 			}
 		}
