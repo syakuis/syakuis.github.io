@@ -9,15 +9,15 @@ var app = angular.module('app', [
 'dialogs.main',
 'pascalprecht.translate',
 'dialogs.default-translations',
+'ngClipboard',
 
 'GeneratorControllers'
 ]);
 
+app.config(['$routeProvider', '$locationProvider', 'toastrConfig', 'dialogsProvider', '$translateProvider', 'ngClipProvider',
+	function($routeProvider, $locationProvider , toastrConfig, dialogsProvider, $translateProvider, ngClipProvider) {
+		 ngClipProvider.setPath("./bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 
-
-app.config(['$routeProvider', '$locationProvider', 'toastrConfig', 'dialogsProvider', '$translateProvider',
-	function($routeProvider, $locationProvider , toastrConfig, dialogsProvider, $translateProvider) {
-		
 		// toastr config
 		angular.extend(toastrConfig, {
 			allowHtml: true,
@@ -69,26 +69,24 @@ app.config(['$routeProvider', '$locationProvider', 'toastrConfig', 'dialogsProvi
 		// route
 		$routeProvider.
 			when('/', {
-				templateUrl : '/partials/generator/create.html',
-				controller : 'Create'
+				templateUrl : './partials/generator/generator.html',
+				controller : 'Generator'
 			}).
 
 			otherwise({
 				redirectTo : '/'
 			});
 
-		$locationProvider.html5Mode({
+		/*$locationProvider.html5Mode({
 			enabled: true,
 			requireBase: false
-		});
+		});*/
 	}
 ]);
 
 
 app.run(['$rootScope',
 	function($rootScope) {
-
-		$rootScope.field = [];
 	}
 ]);
 

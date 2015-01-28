@@ -1,0 +1,161 @@
+<div class="container-flud" ng-controller="Generator">
+<p></p>
+
+<div class="row">
+
+<div class="col-xs-2">
+<div class="form-group has-success">
+	<label class="sr-only" for="module">module</label>
+	<input type="text" class="form-control" ng-model="module" placeholder="모듈명">
+</div>
+</div>
+
+<div class="col-xs-2">
+<div class="form-group has-success">
+<label class="sr-only" for="table">table</label>
+<input type="text" class="form-control" ng-model="table" placeholder="테이블명">
+</div>
+</div>
+
+<div class="col-xs-8">
+<div class="input-group">
+<span class="input-group-btn">
+<button class="btn btn-default" ng-click="fnCreate()">생성하기</button>
+</span>
+<input type="text" class="form-control" ng-model="field_name" placeholder="필드명을 , 구분하여 입력하세요.">
+</div>
+</div>
+
+</div>
+
+<p></p>
+<div class="row">
+
+<div class="col-xs-4">
+<form class="form-inline">
+
+<!-- 기본키 -->
+<button class="btn btn-inverse" ng-click="fnAdd()"><i class="fa fa-plus"></i></button>
+<div class="form-group has-error">
+<label class="sr-only" for="type">type</label>
+<input type="text" class="form-control" ng-model="type" placeholder="id type">
+</div>
+
+<div class="form-group has-error">
+<label class="sr-only" for="name">name</label>
+<input type="text" class="form-control" ng-model="name" placeholder="id name">
+</div>
+<!-- 기본키 -->
+
+<!-- 필드 반복 -->
+<div ng-repeat="field in fields">
+<p></p>
+<button class="btn btn-danger" ng-click="fnDel($index)"><i class="fa fa-minus"></i></button>
+
+<div class="form-group">
+<label class="sr-only" for="type">type</label>
+<input type="text" class="form-control" ng-model="field.type" placeholder="type">
+</div>
+
+<div class="form-group">
+<label class="sr-only" for="name">name</label>
+<input type="text" class="form-control" ng-model="field.name" placeholder="name">
+</div>
+
+</div>
+<!-- 필드 반복 -->
+
+</form>
+</div>
+<div class="col-xs-8">
+
+<!-- JAVA Getter Setter -->
+<div>
+<pre>
+public class {{table | frist_uppercase}} {
+	private {{type}} {{name}};
+	<span ng-repeat="field in fields">private {{field.type}} {{field.name}};<span ng-if="$last == false">&#10;&#09;</span></span>
+}
+</pre>
+</div>
+<!-- JAVA Getter Setter -->
+
+
+<!-- Mybatis Mapper -->
+<div>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
+&lt;mapper namespace="com.ain.modules.{{module}}.mapper.{{table | frist_uppercase}}Mapper"&gt;
+	
+	&lt;resultMap id="{{table}}" type="com.ain.modules.{{module}}.domain.{{table | frist_uppercase}}"&gt;
+		&lt;id property="{{name}}" column="{{name}}" /&gt;
+		<span ng-repeat="field in fields">&lt;result property="{{field.name}}" column="{{field.name}}" /&gt;<span ng-if="$last == false">&#10;&#09;&#09;</span></span>
+	&lt;/resultMap&gt;
+	
+	&lt;select id="select" resultMap="{{table}}"&gt;
+		SELECT * FROM {{table}}
+	&lt;/select&gt;
+	
+	&lt;select id="selectCount" resultType="int"&gt;
+		SELECT NVL(COUNT(*),0) FROM {{table}}
+	&lt;/select&gt;
+	
+	&lt;select id="selectOne" resultMap="{{table}}"&gt;
+		SELECT * FROM {{table}} WHERE {{name}} = #{<span ng-bind="name"></span>}
+	&lt;/select&gt;
+	
+	&lt;insert id="insert" useGeneratedKeys="true" keyProperty="{{name}}"&gt;
+	
+		&lt;selectKey keyProperty="{{name}}" resultType="{{type}}" order="BEFORE"&gt;
+		SELECT {{table | uppercase}}_{{table | uppercase}}_SEQ.NEXTVAL FROM DUAL
+		&lt;/selectKey&gt;
+		
+		INSERT INTO {{table}} (
+		{{name}},
+		<span ng-repeat="field in fields">{{field.name}}<span ng-if="$last == false">,&#10;&#09;&#09;</span></span>
+		) VALUES (
+		#{<span ng-bind="name"></span>},
+		<span ng-repeat="field in fields">#{<span ng-bind="field.name"></span>}<span ng-if="$last == false">,&#10;&#09;&#09;</span></span>
+		)
+	&lt;/insert&gt;
+
+	&lt;update id="update"&gt;
+		UPDATE {{table}} SET
+		<span ng-repeat="field in fields">{{field.name}} =  #{<span ng-bind="field.name"></span>}<span ng-if="$last == false">,&#10;&#09;&#09;</span></span>
+		WHERE {{name}} = #{<span ng-bind="name"></span>}
+	&lt;/update&gt;
+	
+	&lt;delete id="delete"&gt;
+		DELETE FROM {{table}} WHERE {{name}} = #{<span ng-bind="name"></span>}
+	&lt;/delete&gt;
+	
+&lt;/mapper&gt;
+</pre>
+</div>
+<!-- Mybatis Mapper -->
+
+<!-- Mybatis Mapper Interface -->
+<div>
+<pre>
+
+@Repository
+public interface {{table | frist_uppercase}}Mapper {
+
+	List&lt;{{table | frist_uppercase}}&gt; select();
+	int selectCount();
+	{{table | frist_uppercase}} selectOne({{type}} {{name}});
+	void insert({{table | frist_uppercase}} {{name}});
+	void update({{table | frist_uppercase}} {{name}});
+	void delete({{type}} {{name}});
+}
+
+</pre>
+</div>
+<!-- Mybatis Mapper Interface -->
+
+
+</div>
+
+
+</div>
