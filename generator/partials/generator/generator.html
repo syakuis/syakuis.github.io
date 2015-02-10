@@ -78,7 +78,7 @@
 <div>
 <pre>
 public interface {{table | frist_uppercase}} {
-	<span ng-repeat="field in fields">{{field.type}} get{{field.name | frist_uppercase}}();&#10;&#09;void set{{field.name | frist_uppercase}({{field.type}} {{field.name}});<span ng-if="$last == false">&#10;&#09;</span></span>
+	<span ng-repeat="field in fields">{{field.type}} get{{field.name | frist_uppercase}}();&#10;&#09;void set{{field.name | frist_uppercase}}({{field.type}} {{field.name}});<span ng-if="$last == false">&#10;&#09;</span></span>
 }
 </pre>
 </div>
