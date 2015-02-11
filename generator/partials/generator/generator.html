@@ -163,8 +163,8 @@ public interface {{table | frist_uppercase}}Mapper {
 	List&lt;{{table | frist_uppercase}}&gt; select();
 	int selectCount();
 	{{table | frist_uppercase}} selectOne({{type}} {{name}});
-	void insert({{table | frist_uppercase}} {{name}});
-	void update({{table | frist_uppercase}} {{name}});
+	void insert({{table | frist_uppercase}} {{table}});
+	void update({{table | frist_uppercase}} {{table}});
 	void delete({{type}} {{name}});
 }
 </pre>
