@@ -104,9 +104,9 @@ public class {{table | frist_uppercase}} {
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
-&lt;mapper namespace="com.ain.modules.{{module}}.mapper.{{table | frist_uppercase}}Mapper"&gt;
+&lt;mapper namespace="egovmei.modules.{{module}}.mapper.{{table | frist_uppercase}}Mapper"&gt;
 	
-	&lt;resultMap id="{{table}}" type="com.ain.modules.{{module}}.domain.{{table | frist_uppercase}}"&gt;
+	&lt;resultMap id="{{table}}" type="egovmei.modules.{{module}}.domain.{{table | frist_uppercase}}"&gt;
 		&lt;id property="{{name}}" column="{{name}}" /&gt;
 		<span ng-repeat="field in fields">&lt;result property="{{field.name}}" column="{{field.name}}" /&gt;<span ng-if="$last == false">&#10;&#09;&#09;</span></span>
 	&lt;/resultMap&gt;
