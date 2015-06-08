@@ -1,0 +1,31 @@
+{
+  "name": "jrolling",
+  "homepage": "https://github.com/syakuis/jquery-slider-rolling",
+  "authors": [
+    "syaku@naver.com"
+  ],
+  "description": "jQuery rolling",
+  "keywords": [
+    "javascrit",
+    "jQuery",
+    "rolling"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "60e9a55bfc",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "60e9a55bfc199f2c282919831ceaec9cf311d558"
+  },
+  "_source": "git://github.com/syakuis/jrolling.git",
+  "_target": "*",
+  "_originalSource": "jrolling",
+  "_direct": true
+}
