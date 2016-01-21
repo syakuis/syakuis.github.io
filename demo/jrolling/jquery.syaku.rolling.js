@@ -30,7 +30,9 @@
 			'move': 'left', // 흐름 방향
 			'auto': true, // 자동 흐름 설정
 			'prev': null, // 이전 클릭 이벤트
-			'next': null // 다음 클릭 이벤트
+			'next': null, // 다음 클릭 이벤트
+			'play': null, // 실행 클릭 이벤트
+			'stop': null // 종료 클릭 이벤트
 		},
 
 		'config': function(options) {
@@ -84,6 +86,7 @@
 		this.object = object;
 		this.target = object.target;
 		var $target = this.target;
+		// 현재 아이템
 		var $index = 0;
 		var $timer = null;
 
@@ -100,6 +103,9 @@
 			'width': object.options.width,
 			'height': object.options.height,
 		});
+
+		// 현재상태
+		var $state = object.options.auto;
 
 		this.init = function() {
 			var item_type = typeof object.options.items;
@@ -145,6 +151,9 @@
 			// 초기 정렬
 			this.distance(true);
 
+			// 배열이 한개 인 경우 종료
+			if ($size == 1) return;
+
 			// 마우스 오버
 			$container.mouseover(function() {
 				$this.stop();
@@ -162,6 +171,22 @@
 			if (object.options.next != null) {
 				$(object.options.next).click(function(event) {
 					$this.clickBefore(event, true);
+				});
+			}
+
+			if (object.options.play != null) {
+				$(object.options.play).click(function(event) {
+					$this.stop();
+					$state = true;
+					$this.play();
+
+				});
+			}
+
+			if (object.options.stop != null) {
+				$(object.options.stop).click(function(event) {
+					$state = false;
+					$this.stop();
 				});
 			}
 
@@ -202,10 +227,10 @@
 				});
 			});
 
-			$target.trigger( "motionAfter", [ $index ] );
+			$index--;
+			if ($index < 0) $index = ($size - 1);
 
-			$index++;
-			if ($size == $index) $index = 0;
+			$target.trigger( "motionAfter", [ $index ] );
 		}
 		
 		// 이전 거리 계산
@@ -255,10 +280,11 @@
 					}
 				});
 			});
-			$target.trigger( "motionAfter", [ $index ] );
 
 			$index++;
-			if ($size == $index) $index = 0;
+			if ($size <= $index) $index = 0;
+
+			$target.trigger( "motionAfter", [ $index ] );
 		}
 
 		// 다음 거리 계산
@@ -287,20 +313,28 @@
 		}
 
 		this.motion = function() {
+			this.stop();
+			$(object.options.prev).unbind('click');
+			$(object.options.next).unbind('click');
+
 			switch(object.options.move) {
 				case 'left':
 				case 'up':
-					$this.nextMotion();
+					$this.nextMotion(function() {
+						$this.clickAfter(false);
+					});
 				break;
 				case 'right':
 				case 'down':
-					$this.prevMotion();
+					$this.prevMotion(function() {
+						$this.clickAfter(false);
+					});
 				break;
 			}
 		}
 
 		this.play = function() {
-			if (object.options.auto == true) {
+			if ($state == true) {
 				$timer = setInterval(this.motion, object.options.delay);
 			}
 		}
@@ -326,7 +360,7 @@
 			}
 		}
 
-		this.clickAfter = function() {
+		this.clickAfter = function(play) {
 			$(object.options.prev).click(function(event) {
 				$this.clickBefore(event, false);
 			});
@@ -335,7 +369,7 @@
 				$this.clickBefore(event, true);
 			});
 
-			$this.play();
+			if (play != false) $this.play();
 		}
 	};
 
